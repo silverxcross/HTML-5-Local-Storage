@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>HTML 5 LocalStorage</title>
+</head>
+<body>
+
+<form id="fStorage">
+	<input type="text" id="tbKey" name="tbKey" ></input>
+	<input type="text" id="tbValue" name="tbValue" ></input>
+	<input type="button" id="tbSubmit" name="tbSubmit" value="Submit"></input>
+</form>
+
+<script type="text/javascript" src="js/utility.js"></script>
+<script type="text/javascript" src="js/storage.js"></script>
+<script type="text/javascript">
+
+var ls = new StorageDB();
+
+/*
+ *	TEST DATA
+ */
+var data =  { ValA: "Test1", ValB: "Test2", ValC: "Test3", ValD: "Test4", ValE: "Test5", ValF: "Test6", ValG: "Test7", ValH: "Test8", ValI: "Test9" };
+var data2 =  { ValA: "Test1", ValB: "Test2", ValC: "Test3" };
+var removeData = [ 'ValD', 'ValG', 'ValI', 'ValB', 'ValF', 'ValA'];
+
+
+</script>
+</body>
+</html>
