@@ -4,17 +4,105 @@
 </head>
 <body>
 
-<form id="fStorage">
-	<input type="text" id="tbKey" name="tbKey" ></input>
-	<input type="text" id="tbValue" name="tbValue" ></input>
-	<input type="button" id="tbSubmit" name="tbSubmit" value="Submit"></input>
+<h1>HTML 5 STORAGE</h1>
+
+<div style="float: left; border: solid 1px black; padding: 10px;">
+<form id="fStorage" action="">
+	<table>
+		<tr>
+			<td>Key:</td>
+			<td><input type="text" id="tbKey" name="tbKey" ></input></td>
+		</tr><tr>
+			<td>Value:</td>
+			<td><input type="text" id="tbValue" name="tbValue" ></input></td>
+		</tr><tr>
+			<td colspan="2" align="center">
+				[ <input type="radio" id="rdStore" name="rdStore" value="0"> Local
+				<input type="radio" id="rdStore" name="rdStore" value="1"> Session ]
+			</td>
+		</tr><tr>
+			<td colspan="2" align="right">
+				<input type="button" id="tbClear" name="tbClear" value="Clear" onclick="clearData()"></input>
+				<input type="button" id="tbSubmit" name="tbSubmit" value="Submit" onclick="process()"></input>
+			</td>
+		</tr>
+	</table>
 </form>
+</div>
+
+<div id="displayAll" style="float: left; border: solid 1px black; padding: 10px;">
+
+</div>
 
 <script type="text/javascript" src="js/utility.js"></script>
 <script type="text/javascript" src="js/storage.js"></script>
 <script type="text/javascript">
 
-var ls = new StorageDB();
+function displayAllKeyValues() {
+	var div = document.getElementById("displayAll");
+	
+	var tab = document.createElement('table'),
+		tabD = document.createElement('td'),
+		tabR = document.createElement('tr');
+	
+		tab.setAttribute('tblDisplay');
+	
+	var engine = new StorageDB();
+	
+	var arr = engine.debugger('all');
+	
+	for (var i = 0; i < arr.length; i++ ) {
+		for(var x = 0; x < arr[i].length; x++) {
+			console.log(arr[i][x]);
+		}
+	}
+	// div.appendChild(tab);	
+	
+	
+};
+
+function storageEngine() {
+	var type = 0;
+	
+	for ( var i = 0; i < document.forms["fStorage"].rdStore.length; i++) {
+		if ( document.forms["fStorage"].rdStore[i].checked ) {
+			var checked = document.forms["fStorage"].rdStore[i].value;
+			
+			type = checked;
+		}
+	}
+	return type;
+};
+
+function clearData() {
+	ls.clear();
+	
+	alert('Cleared!!');
+};
+
+function storeVal(store, obj) {
+	return store.create(obj);
+};
+
+function process() {
+	var tbKey = document.getElementById("tbKey").value,
+		tbValue = document.getElementById("tbValue").value;
+	
+	var format = {}, 
+		engine;
+	
+	format[tbKey] = tbValue;
+	
+	engine = new StorageDB(storageEngine())
+	
+	var result = storeVal(engine, format);
+	
+	if (result.success) {
+		alert("Stored!!");
+	} else {
+		alert("Failed!!");
+	}
+};
 
 /*
  *	TEST DATA

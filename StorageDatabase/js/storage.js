@@ -14,6 +14,8 @@ var StorageDB = function(type) {
 		create: function(args) {
 			var cn = db;
 
+			console.log(args.length);
+			
 			var insert = function(key, val) {
 				cn.setItem(key, val);
 			};
@@ -92,10 +94,13 @@ var StorageDB = function(type) {
 		},
 		clear: function(args) {
 			var counter = 0;
-			
+
 			if (!args) {
+				
 				db.clear();
 
+				console.log(db);
+				
 				return true;
 			} else {
 			
@@ -117,6 +122,9 @@ var StorageDB = function(type) {
 		},
 		sort: function(arr) {
 			return arr.sort();
+		},
+		len: function() {
+			return db.length;
 		},
 		rowsChanged: function(action, num) {
 			var msg  = "";
@@ -179,8 +187,16 @@ var StorageDB = function(type) {
 			return msg;
 		},
 		debugger: function(action) {
-			var cn = db;
-		
+			var cn = db,
+				results;
+			
+			/* 
+			 *
+			 *	UPDATED ON EVERY CHANGE TO STORAGE
+			 *			NEXT VERSION
+			 */
+			//var settings = {};
+			
 			var getAll = function() {
 			
 				var keys = [],
@@ -206,7 +222,7 @@ var StorageDB = function(type) {
 			
 			/*
 			 *
-			 *	IN PROCESS
+			 *	NEXT VERSION
 			 *
 			var results = {},
 				oldValue = "",
@@ -219,6 +235,9 @@ var StorageDB = function(type) {
 					break;
 				case 'values':
 					results = getValues();
+					break;
+				case 'all':
+					results = getAll();
 					break;
 				default:
 					results = this.errorHandler(1)
